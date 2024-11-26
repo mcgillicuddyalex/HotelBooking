@@ -1,0 +1,39 @@
+@HotelBooking.Api_HostAddress = https://localhost:44319
+@HotelName = Hotel 0
+@StartDate = 2024-01-01
+@EndDate = 20240-01-02
+@NumberOfPeople = 5
+@HotelRoomId = 153
+@BookingNumber = 157f5784-7279-49cd-9ea0-1bacd0e04c0b
+
+###
+
+POST {{HotelBooking.Api_HostAddress}}/testdata/seed
+Accept: application/json
+
+###
+
+POST {{HotelBooking.Api_HostAddress}}/testdata/reset
+Accept: application/json
+
+###
+
+GET {{HotelBooking.Api_HostAddress}}/hotels/{{HotelName}}
+Accept: application/json
+
+###
+
+GET {{HotelBooking.Api_HostAddress}}/room/?startDate={{StartDate}}&endDate={{EndDate}}&numberOfPeople={{NumberOfPeople}}
+Accept: application/json
+
+###
+
+POST {{HotelBooking.Api_HostAddress}}/room/{{HotelRoomId}}/book/?startDate={{StartDate}}&endDate={{EndDate}}&numberOfPeople={{NumberOfPeople}}
+Accept: application/json
+
+###
+
+GET {{HotelBooking.Api_HostAddress}}/booking/{{BookingNumber}}
+Accept: application/json
+
+###
