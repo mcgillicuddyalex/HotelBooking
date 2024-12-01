@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelBooking.Service.Tests"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelBooking.Api.Tests", "HotelBooking.Api.Tests\HotelBooking.Api.Tests.csproj", "{582B917F-BB0D-4F32-8918-D63CD16E3DCB}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{97D92CF9-E3E2-4372-9CEA-B3A40A3100C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{582B917F-BB0D-4F32-8918-D63CD16E3DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{582B917F-BB0D-4F32-8918-D63CD16E3DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{582B917F-BB0D-4F32-8918-D63CD16E3DCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97D92CF9-E3E2-4372-9CEA-B3A40A3100C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97D92CF9-E3E2-4372-9CEA-B3A40A3100C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97D92CF9-E3E2-4372-9CEA-B3A40A3100C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97D92CF9-E3E2-4372-9CEA-B3A40A3100C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

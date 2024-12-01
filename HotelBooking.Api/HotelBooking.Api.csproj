@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>6d54b6e1-31ba-468c-b857-723f34a7d5b9</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +24,12 @@
     <ProjectReference Include="..\HotelBooking.Domain\HotelBooking.Domain.csproj" />
     <ProjectReference Include="..\HotelBooking.EF\HotelBooking.EF.csproj" />
     <ProjectReference Include="..\HotelBooking.Service\HotelBooking.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="hotelBooking.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

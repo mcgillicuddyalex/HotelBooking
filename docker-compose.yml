@@ -1,0 +1,6 @@
+services:
+  hotelbooking.api:
+    image: ${DOCKER_REGISTRY-}hotelbookingapi
+    build:
+      context: .
+      dockerfile: HotelBooking.Api/Dockerfile

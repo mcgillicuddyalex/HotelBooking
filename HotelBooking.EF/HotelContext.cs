@@ -39,9 +39,7 @@ namespace HotelBooking.EF
         {
             var projectRoot = Directory.GetCurrentDirectory();
 
-            var solutionRoot = Directory.GetParent(projectRoot);
-
-            DbPath = Path.Join(solutionRoot?.FullName, "hotelBooking.db");
+            DbPath = Path.Join(projectRoot, "hotelBooking.db");
         }
 
         // The following configures EF to create a Sqlite database file in the solution folder
