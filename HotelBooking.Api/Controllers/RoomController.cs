@@ -18,17 +18,17 @@ namespace HotelBooking.Api.Controllers
         }
 
         [HttpGet()]
-        public IEnumerable<HotelRoomModel> GetAvailableRooms(DateOnly startDate, DateOnly endDate, int numberOfPeople)
+        public async Task<IEnumerable<HotelRoomModel>> GetAvailableRooms(DateOnly startDate, DateOnly endDate, int numberOfPeople)
         {
-            return _hotelRoomService.GetAvailableRooms(startDate, endDate, numberOfPeople);
+            return await _hotelRoomService.GetAvailableRooms(startDate, endDate, numberOfPeople);
         }
 
         [HttpPost("{hotelRoomId}/Book")]
-        public ActionResult BookRoom(int hotelRoomId, int numberOfPeople, DateOnly startDate, DateOnly endDate)
+        public async Task<IActionResult> BookRoom(int hotelRoomId, int numberOfPeople, DateOnly startDate, DateOnly endDate)
         {
             try
             {
-                var bookingNumber = _hotelRoomBookingService.Book(hotelRoomId, numberOfPeople, startDate, endDate);
+                var bookingNumber = await _hotelRoomBookingService.Book(hotelRoomId, numberOfPeople, startDate, endDate);
 
                 return Ok(bookingNumber);
             }

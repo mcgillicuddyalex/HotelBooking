@@ -22,21 +22,21 @@ namespace HotelBooking.Api.Tests
         }
 
         [Fact]
-        public void Get_Calls_HotelRoomBookingService()
+        public async Task Get_Calls_HotelRoomBookingService()
         {
             var bookingNumber = _fixture.Create<Guid>();
 
-            var booking = _fixture.Create<HotelRoomBookingModel>();
+            var booking = _fixture.Create<HotelRoomBookingModel?>();
 
-            _hotelRoomBookingService.Setup(x => x.Get(bookingNumber)).Returns(booking);
+            _hotelRoomBookingService.Setup(x => x.Get(bookingNumber)).Returns(Task.FromResult(booking));
 
-            var result = _sut.Get(bookingNumber);
+            var result = await _sut.Get(bookingNumber);
 
             _hotelRoomBookingService.Verify(x => x.Get(bookingNumber), Times.Once());
 
-            Assert.Equal(booking.Id, result?.Id);
+            Assert.Equal(booking?.Id, result?.Id);
 
-            Assert.Equal(booking.Number, result?.Number);
+            Assert.Equal(booking?.Number, result?.Number);
 
             Assert.Equal(booking?.HotelRoom?.Id, result?.HotelRoom?.Id);
 

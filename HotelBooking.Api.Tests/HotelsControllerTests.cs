@@ -22,15 +22,15 @@ namespace HotelBooking.Api.Tests
         }
 
         [Fact]
-        public void GetByName_Calls_HotelService()
+        public async Task GetByName_Calls_HotelService()
         {
             var name = _fixture.Create<string>();
 
             var hotels = _fixture.CreateMany<HotelModel>();
 
-            _hotelService.Setup(x => x.GetHotelsByName(name)).Returns(hotels);
+            _hotelService.Setup(x => x.GetHotelsByName(name)).Returns(Task.FromResult(hotels));
 
-            var results = _sut.GetByName(name);
+            var results = await _sut.GetByName(name);
 
             _hotelService.Verify(x => x.GetHotelsByName(name), Times.Once());
 

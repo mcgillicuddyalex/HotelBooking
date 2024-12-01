@@ -11,19 +11,21 @@ namespace HotelBooking.Service
         {
             _dal = hotelRoomDAL;
         }
-        public IEnumerable<HotelRoomModel> GetAvailableRooms(DateOnly startDate, DateOnly endDate, int numberOfPeople)
+        public async Task<IEnumerable<HotelRoomModel>> GetAvailableRooms(DateOnly startDate, DateOnly endDate, int numberOfPeople)
         {
-            return _dal.GetAvailableRooms(startDate, endDate, numberOfPeople).Select(x => new HotelRoomModel(x));
+            var availableRooms = await _dal.GetAvailableRooms(startDate, endDate, numberOfPeople);
+
+            return availableRooms.Select(x => new HotelRoomModel(x));
         }
 
-        public void Seed()
+        public async Task Seed()
         {
-            _dal.Seed();
+            await _dal.Seed();
         }
 
-        public void Reset()
+        public async Task Reset()
         {
-            _dal.Reset();
+            await _dal.Reset();
         }
     }
 }

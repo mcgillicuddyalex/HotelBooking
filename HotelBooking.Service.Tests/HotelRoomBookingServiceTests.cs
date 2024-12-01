@@ -21,33 +21,33 @@ namespace HotelBooking.Service.Tests
         }
 
         [Fact]
-        public void Get_Returns_HotelRoomBooking()
+        public async Task Get_Returns_HotelRoomBooking()
         {
-            var hotelRoomBooking = _fixture.Create<HotelRoomBooking>();
+            var hotelRoomBooking = _fixture.Create<HotelRoomBooking?>();
 
             var bookingNumber = _fixture.Create<Guid>();
 
-            _dal.Setup(x => x.Get(bookingNumber)).Returns(hotelRoomBooking);
+            _dal.Setup(x => x.Get(bookingNumber)).Returns(Task.FromResult(hotelRoomBooking));
 
-            var result = _sut.Get(bookingNumber);
+            var result = await _sut.Get(bookingNumber);
 
-            Assert.Equal(hotelRoomBooking.Id, result?.Id);
+            Assert.Equal(hotelRoomBooking?.Id, result?.Id);
 
-            Assert.Equal(hotelRoomBooking.Number, result?.Number);
+            Assert.Equal(hotelRoomBooking?.Number, result?.Number);
 
-            Assert.Equal(hotelRoomBooking.HotelRoom?.Id, result?.HotelRoom?.Id);
+            Assert.Equal(hotelRoomBooking?.HotelRoom?.Id, result?.HotelRoom?.Id);
 
-            Assert.Equal(hotelRoomBooking.NumberOccupants, result?.NumberOccupants);
+            Assert.Equal(hotelRoomBooking?.NumberOccupants, result?.NumberOccupants);
 
-            Assert.Equal(hotelRoomBooking.StartDate, result?.StartDate);
+            Assert.Equal(hotelRoomBooking?.StartDate, result?.StartDate);
 
-            Assert.Equal(hotelRoomBooking.EndDate, result?.EndDate);
+            Assert.Equal(hotelRoomBooking?.EndDate, result?.EndDate);
 
         }
 
 
         [Fact]
-        public void Book_Calls_DAL()
+        public async Task Book_Calls_DAL()
         {
             var hotelRoomId = _fixture.Create<int>();
 
@@ -57,11 +57,11 @@ namespace HotelBooking.Service.Tests
 
             var endDate = DateOnly.FromDateTime(_fixture.Create<DateTime>());
 
-            var bookingNumber = _fixture.Create<Guid>();
+            var bookingNumber = _fixture.Create<Guid?>();
 
-            _dal.Setup(x => x.Book(hotelRoomId, numberOfPeople, startDate, endDate)).Returns(bookingNumber);
+            _dal.Setup(x => x.Book(hotelRoomId, numberOfPeople, startDate, endDate)).Returns(Task.FromResult(bookingNumber));
 
-            var result = _sut.Book(hotelRoomId, numberOfPeople, startDate,endDate);
+            var result = await _sut.Book(hotelRoomId, numberOfPeople, startDate,endDate);
 
             _dal.Verify(x => x.Book(hotelRoomId, numberOfPeople, startDate, endDate), Times.Once());
 

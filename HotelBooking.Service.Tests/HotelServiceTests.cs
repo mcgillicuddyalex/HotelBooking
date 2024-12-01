@@ -21,16 +21,16 @@ namespace HotelBooking.Service.Tests
         }
 
         [Fact]
-        public void GetHotelsByName_Returns_Hotels()
+        public async Task GetHotelsByName_Returns_Hotels()
         {
             var hotels = _fixture.Build<Hotel>()
                 .CreateMany();
 
             var hotelName = "Hotel Name";
 
-            _dal.Setup(x => x.GetHotelsByName(hotelName)).Returns(hotels);
+            _dal.Setup(x => x.GetHotelsByName(hotelName)).Returns(Task.FromResult(hotels));
 
-            var results = _sut.GetHotelsByName(hotelName);
+            var results = await _sut.GetHotelsByName(hotelName);
 
             Assert.Equal(results.Count(), hotels.Count());
 

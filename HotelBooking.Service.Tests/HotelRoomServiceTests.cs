@@ -21,7 +21,7 @@ namespace HotelBooking.Service.Tests
         }
 
         [Fact]
-        public void GetAvailableRooms_Returns_HotelRooms()
+        public async Task GetAvailableRooms_Returns_HotelRooms()
         {
             var hotelRooms = _fixture.Build<HotelRoom>()
                 .CreateMany();
@@ -32,9 +32,9 @@ namespace HotelBooking.Service.Tests
 
             var numberOfPeople = _fixture.Create<int>();
 
-            _dal.Setup(x => x.GetAvailableRooms(startDate, endDate, numberOfPeople)).Returns(hotelRooms);
+            _dal.Setup(x => x.GetAvailableRooms(startDate, endDate, numberOfPeople)).Returns(Task.FromResult(hotelRooms));
 
-            var results = _sut.GetAvailableRooms(startDate, endDate, numberOfPeople);
+            var results = await _sut.GetAvailableRooms(startDate, endDate, numberOfPeople);
 
             Assert.Equal(results.Count(), hotelRooms.Count());
 

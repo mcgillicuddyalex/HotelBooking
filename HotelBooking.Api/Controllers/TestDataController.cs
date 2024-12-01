@@ -19,19 +19,27 @@ namespace HotelBooking.Api.Controllers
         }
 
         [HttpPost("Seed", Name = "Seed")]
-        public void Seed()
+        public async Task<IActionResult> Seed()
         {
-            _hotelService.Seed();
-            _hotelRoomService.Seed();
-            _hotelRoomBookingService.Seed();
+            await _hotelService.Seed();
+
+            await _hotelRoomService.Seed();
+
+            await _hotelRoomBookingService.Seed();
+
+            return Ok();
         }
 
         [HttpPost("Reset", Name = "Reset")]
-        public void Reset()
+        public async Task<IActionResult> Reset()
         {
-            _hotelRoomBookingService.Reset();
-            _hotelRoomService.Reset();
-            _hotelService.Reset();
+            await _hotelRoomBookingService.Reset();
+
+            await _hotelRoomService.Reset();
+
+            await _hotelService.Reset();
+
+            return Ok();
         }
     }
 }

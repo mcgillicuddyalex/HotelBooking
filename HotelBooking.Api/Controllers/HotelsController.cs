@@ -16,9 +16,9 @@ namespace HotelBooking.Api.Controllers
         }
 
         [HttpGet("{name}")]
-        public IEnumerable<HotelModel> GetByName(string name)
+        public async Task<IEnumerable<HotelModel>> GetByName(string name)
         {
-            return _hotelService.GetHotelsByName(name);
+            return await _hotelService.GetHotelsByName(name);
         }
     }
 }

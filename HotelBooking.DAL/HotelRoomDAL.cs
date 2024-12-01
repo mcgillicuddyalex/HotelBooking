@@ -14,21 +14,24 @@ namespace HotelBooking.DAL
             _hotelContext = hotelContext;
         }
 
-        public IEnumerable<HotelRoom> GetAvailableRooms(DateOnly startDate, DateOnly endDate, int numberOfPeople)
+        public async Task<IEnumerable<HotelRoom>> GetAvailableRooms(DateOnly startDate, DateOnly endDate, int numberOfPeople)
         {
-            var validHotelRooms = _hotelContext.HotelRooms.Include(x => x.Hotel).Where(x => x.Capacity >= numberOfPeople).ToList();
+            var validHotelRooms = await _hotelContext.HotelRooms.Include(x => x.Hotel).Where(x => x.Capacity >= numberOfPeople).ToListAsync();
 
             var validHotelRoomIds = validHotelRooms.Select(x => x.Id);
 
-            var hotelRoomBookings = _hotelContext.HotelRoomBookings
-                .ToList()
-                .Where(x => validHotelRoomIds.Contains(x.HotelRoomId) && x.ViolatesBooking(startDate, endDate))
+            var hotelRoomBookings = await _hotelContext.HotelRoomBookings
+                .Where(x => validHotelRoomIds.Contains(x.HotelRoomId))
+                .ToListAsync();
+
+            var clashingHotelRoomBookings = hotelRoomBookings
+                .Where(x => x.ViolatesBooking(startDate, endDate))
                 .Select(x => x.HotelRoomId);
 
-            return validHotelRooms.Where(x => !hotelRoomBookings.Contains(x.Id));
+            return validHotelRooms.Where(x => !clashingHotelRoomBookings.Contains(x.Id));
         }
 
-        public void Seed()
+        public async Task Seed()
         {
             var hotels = _hotelContext.Hotels;
 
@@ -42,13 +45,14 @@ namespace HotelBooking.DAL
                     _hotelContext.HotelRooms.Add(new HotelRoom($"Room {i}", (RoomType)(i%3), hotel.Id, 5));
             }
 
-            _hotelContext.SaveChanges();
+            await _hotelContext.SaveChangesAsync();
         }
 
-        public void Reset()
+        public async Task Reset()
         {
             _hotelContext.HotelRooms.RemoveRange(_hotelContext.HotelRooms);
-            _hotelContext.SaveChanges();
+
+            await _hotelContext.SaveChangesAsync();
         }
     }
 }

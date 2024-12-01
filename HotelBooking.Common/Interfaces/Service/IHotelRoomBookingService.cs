@@ -4,9 +4,9 @@ namespace HotelBooking.Common.Interfaces.Service
 {
     public interface IHotelRoomBookingService
     {
-        public HotelRoomBookingModel? Get(Guid bookingNumber);
-        public Guid? Book(int hotelRoomId, int numberOfPeople, DateOnly startDate, DateOnly endDate);
-        void Seed();
-        void Reset();
+        Task<HotelRoomBookingModel?> Get(Guid bookingNumber);
+        Task<Guid?> Book(int hotelRoomId, int numberOfPeople, DateOnly startDate, DateOnly endDate);
+        Task Seed();
+        Task Reset();
     }
 }

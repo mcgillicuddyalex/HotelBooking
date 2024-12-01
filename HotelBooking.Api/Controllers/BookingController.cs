@@ -16,9 +16,9 @@ namespace HotelBooking.Api.Controllers
         }
 
         [HttpGet("{bookingNumber}")]
-        public HotelRoomBookingModel? Get(Guid bookingNumber)
+        public async Task<HotelRoomBookingModel?> Get(Guid bookingNumber)
         {
-            return _hotelRoomBookingService.Get(bookingNumber);
+            return await _hotelRoomBookingService.Get(bookingNumber);
         }
     }
 }

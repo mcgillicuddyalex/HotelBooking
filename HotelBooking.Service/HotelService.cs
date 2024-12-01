@@ -11,17 +11,19 @@ namespace HotelBooking.Service
         {
             _dal = hotelDAL;
         }
-        public IEnumerable<HotelModel> GetHotelsByName(string name)
+        public async Task<IEnumerable<HotelModel>> GetHotelsByName(string name)
         {
-            return _dal.GetHotelsByName(name).Select(x => new HotelModel(x));
+            var hotelRooms = await _dal.GetHotelsByName(name);
+                
+            return hotelRooms.Select(x => new HotelModel(x));
         }
-        public void Seed()
+        public async Task Seed()
         {
-            _dal.Seed();
+            await _dal.Seed();
         }
-        public void Reset()
+        public async Task Reset()
         {
-            _dal.Reset();
+            await _dal.Reset();
         }
     }
 }

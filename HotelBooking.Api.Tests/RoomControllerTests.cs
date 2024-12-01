@@ -26,7 +26,7 @@ namespace HotelBooking.Api.Tests
         }
 
         [Fact]
-        public void GetAvailableRooms_Calls_HotelRoomService()
+        public async Task GetAvailableRooms_Calls_HotelRoomService()
         {
             var startDate = DateOnly.FromDateTime(_fixture.Create<DateTime>());
 
@@ -36,9 +36,9 @@ namespace HotelBooking.Api.Tests
 
             var hotelRooms = _fixture.CreateMany<HotelRoomModel>();
 
-            _hotelRoomService.Setup(x => x.GetAvailableRooms(startDate, endDate, numberOfPeople)).Returns(hotelRooms);
+            _hotelRoomService.Setup(x => x.GetAvailableRooms(startDate, endDate, numberOfPeople)).Returns(Task.FromResult(hotelRooms));
 
-            var results = _sut.GetAvailableRooms(startDate, endDate, numberOfPeople);
+            var results = await _sut.GetAvailableRooms(startDate, endDate, numberOfPeople);
 
             _hotelRoomService.Verify(x => x.GetAvailableRooms(startDate, endDate, numberOfPeople), Times.Once());
 
@@ -62,7 +62,7 @@ namespace HotelBooking.Api.Tests
 
 
         [Fact]
-        public void BookRoom_Calls_HotelRoomBookingService()
+        public async Task BookRoom_Calls_HotelRoomBookingService()
         {
             var hotelRoomId = _fixture.Create<int>();
 
@@ -74,9 +74,9 @@ namespace HotelBooking.Api.Tests
 
             var bookingNumber = _fixture.Create<Guid?>();
 
-            _hotelRoomBookingService.Setup(x => x.Book(hotelRoomId, numberOfPeople, startDate, endDate)).Returns(bookingNumber);
+            _hotelRoomBookingService.Setup(x => x.Book(hotelRoomId, numberOfPeople, startDate, endDate)).Returns(Task.FromResult(bookingNumber));
 
-            var result = _sut.BookRoom(hotelRoomId, numberOfPeople, startDate, endDate);
+            var result = await _sut.BookRoom(hotelRoomId, numberOfPeople, startDate, endDate);
 
             _hotelRoomBookingService.Verify(x => x.Book(hotelRoomId, numberOfPeople, startDate, endDate), Times.Once());
 
@@ -86,7 +86,7 @@ namespace HotelBooking.Api.Tests
         }
 
         [Fact]
-        public void BookRoom_With_InvalidRequest_Returns_BadRequest()
+        public async Task BookRoom_With_InvalidRequest_Returns_BadRequest()
         {
             var hotelRoomId = _fixture.Create<int>();
 
@@ -98,7 +98,7 @@ namespace HotelBooking.Api.Tests
 
             _hotelRoomBookingService.Setup(x => x.Book(hotelRoomId, numberOfPeople, startDate, endDate)).Throws<Exception>();
 
-            var result = _sut.BookRoom(hotelRoomId, numberOfPeople, startDate, endDate);
+            var result = await _sut.BookRoom(hotelRoomId, numberOfPeople, startDate, endDate);
 
             _hotelRoomBookingService.Verify(x => x.Book(hotelRoomId, numberOfPeople, startDate, endDate), Times.Once());
 

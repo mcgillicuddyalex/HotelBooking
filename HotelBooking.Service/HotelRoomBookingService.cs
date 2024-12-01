@@ -12,26 +12,26 @@ namespace HotelBooking.Service
             _dal = hotelRoomBookingDAL;
         }
 
-        public HotelRoomBookingModel? Get(Guid bookingNumber)
+        public async Task<HotelRoomBookingModel?> Get(Guid bookingNumber)
         {
-            var booking = _dal.Get(bookingNumber);
+            var booking = await _dal.Get(bookingNumber);
 
             return booking == null ? null : new HotelRoomBookingModel(booking);
         }
 
-        public Guid? Book(int hotelRoomId, int numberOfPeople, DateOnly startDate, DateOnly endDate)
+        public async Task<Guid?> Book(int hotelRoomId, int numberOfPeople, DateOnly startDate, DateOnly endDate)
         {
-            return _dal.Book(hotelRoomId, numberOfPeople, startDate, endDate);
+            return await _dal.Book(hotelRoomId, numberOfPeople, startDate, endDate);
         }
 
-        public void Seed()
+        public async Task Seed()
         {
-            _dal.Seed();
+            await _dal.Seed();
         }
 
-        public void Reset()
+        public async Task Reset()
         {
-            _dal.Reset();
+            await _dal.Reset();
         }
     }
 }

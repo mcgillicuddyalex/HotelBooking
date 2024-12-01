@@ -4,8 +4,8 @@ namespace HotelBooking.Common.Interfaces.DAL
 {
     public interface IHotelDAL
     {
-        public IEnumerable<Hotel> GetHotelsByName(string name);
-        void Seed();
-        void Reset();
+        Task<IEnumerable<Hotel>> GetHotelsByName(string name);
+        Task Seed();
+        Task Reset();
     }
 }

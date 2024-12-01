@@ -1,6 +1,7 @@
 ﻿using HotelBooking.Common.Interfaces.DAL;
 using HotelBooking.Common.Interfaces.EF;
 using HotelBooking.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelBooking.DAL
 {
@@ -11,24 +12,24 @@ namespace HotelBooking.DAL
         {
             _hotelContext = hotelContext;
         }
-        public IEnumerable<Hotel> GetHotelsByName(string name)
+        public async Task<IEnumerable<Hotel>> GetHotelsByName(string name)
         {
-            return _hotelContext.Hotels.Where(x => x.Name.Contains(name));
+            return await _hotelContext.Hotels.Where(x => x.Name.Contains(name)).ToListAsync();
         }
 
-        public void Seed()
+        public async Task Seed()
         {
             for(var i = 0; i <5; i++)
                 _hotelContext.Hotels.Add(new Hotel($"Hotel {i}", $"Location {i}"));
 
-            _hotelContext.SaveChanges();
+            await _hotelContext.SaveChangesAsync();
         }
 
-        public void Reset()
+        public async Task Reset()
         {
             _hotelContext.Hotels.RemoveRange(_hotelContext.Hotels);
 
-            _hotelContext.SaveChanges();
+            await _hotelContext.SaveChangesAsync();
         }
     }
 }

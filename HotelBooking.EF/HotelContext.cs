@@ -46,9 +46,9 @@ namespace HotelBooking.EF
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite($"Data Source={DbPath}");
 
-        public override int SaveChanges()
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            return base.SaveChanges();
+            return base.SaveChangesAsync(cancellationToken);
         }
     }
 }

@@ -13,12 +13,12 @@ namespace HotelBooking.DAL
             _hotelContext = hotelContext;
         }
 
-        public HotelRoomBooking? Get(Guid bookingNumber)
+        public async Task<HotelRoomBooking?> Get(Guid bookingNumber)
         {
-            return _hotelContext.HotelRoomBookings.Include(x => x.HotelRoom.Hotel).FirstOrDefault(x => x.Number == bookingNumber);
+            return await _hotelContext.HotelRoomBookings.Include(x => x.HotelRoom.Hotel).FirstOrDefaultAsync(x => x.Number == bookingNumber);
         }
 
-        public Guid? Book(int hotelRoomId, int numberOfPeople, DateOnly startDate, DateOnly endDate)
+        public async Task<Guid?> Book(int hotelRoomId, int numberOfPeople, DateOnly startDate, DateOnly endDate)
         {
             var hotelRoomBooking = new HotelRoomBooking(hotelRoomId, numberOfPeople, startDate, endDate);
 
@@ -32,13 +32,13 @@ namespace HotelBooking.DAL
             {
                 _hotelContext.HotelRoomBookings.Add(hotelRoomBooking);
 
-                _hotelContext.SaveChanges();
+                await _hotelContext.SaveChangesAsync();
 
                 return hotelRoomBooking.Number;
             }
         }
 
-        public void Seed()
+        public async Task Seed()
         {
             var hotelRooms = _hotelContext.HotelRooms;
 
@@ -49,14 +49,14 @@ namespace HotelBooking.DAL
             foreach (var hotelRoom in hotelRooms)
                 _hotelContext.HotelRoomBookings.Add(new HotelRoomBooking(hotelRoom.Id, hotelRoom.Capacity, startDate, endDate));
 
-            _hotelContext.SaveChanges();
+            await _hotelContext.SaveChangesAsync();
         }
 
-        public void Reset()
+        public async Task Reset()
         {
             _hotelContext.HotelRoomBookings.RemoveRange(_hotelContext.HotelRoomBookings);
 
-            _hotelContext.SaveChanges();
+            await _hotelContext.SaveChangesAsync();
         }
     }
 }

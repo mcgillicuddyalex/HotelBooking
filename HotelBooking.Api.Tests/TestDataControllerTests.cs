@@ -23,9 +23,9 @@ namespace HotelBooking.Api.Tests
         }
 
         [Fact]
-        public void Seed_Calls_Service_Methods()
+        public async Task Seed_Calls_Service_Methods()
         {
-            _sut.Seed();
+            await _sut.Seed();
 
             _hotelService.Verify(x => x.Seed(), Times.Once());
 
@@ -35,9 +35,9 @@ namespace HotelBooking.Api.Tests
         }
 
         [Fact]
-        public void Reset_Calls_Service_Methods()
+        public async Task Reset_Calls_Service_Methods()
         {
-            _sut.Reset();
+            await _sut.Reset();
 
             _hotelService.Verify(x => x.Reset(), Times.Once());
 
