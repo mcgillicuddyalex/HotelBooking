@@ -72,7 +72,7 @@ namespace HotelBooking.Api.Tests
 
             var numberOfPeople = _fixture.Create<int>();
 
-            var bookingNumber = _fixture.Create<Guid>();
+            var bookingNumber = _fixture.Create<Guid?>();
 
             _hotelRoomBookingService.Setup(x => x.Book(hotelRoomId, numberOfPeople, startDate, endDate)).Returns(bookingNumber);
 
